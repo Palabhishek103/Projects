@@ -1,36 +1,25 @@
-function calculateLoan()
-{
-    
-    const loanAmount = parseFloat(document.getElementById("loanAmountInput").value);
-    const interstRate = parseFloat(document.getElementById("interestRateInput").value);
-    const loanTerm = parseFloat(document.getElementById("loanTermInput").value);
+let hr = document.getElementById("hour");
+let min = document.getElementById("min");
+let sec = document.getElementById("sec");
+function displayTime(){
+let date = new Date();
+//console.log(date);
 
-    if(isNaN(loanAmount) || isNaN(interstRate) || isNaN(loanTerm)){
-        showError('Please enter valid number');
-        return;
+let hh = date.getHours();
+let mm = date.getMinutes();
+let ss = date.getSeconds();
+//console.log(hh,mm,ss);
 
+let hRotation = 30*hh + mm/2;
+let mRotation = 6*mm;
+let sRotation = 6*ss;
+console.log(hRotation,mRotation,sRotation);
 
-    }
-    const monthlyInterest = interstRate / 100 /12;
-    const totalPayments = loanTerm;
-    const monthlyPayment = (loanAmount * monthlyInterest)/(1-Math.pow(1+monthlyInterest,-totalPayments));
-    const totalInterest = (monthlyPayment * totalPayments) - loanAmount;
-    displayResult(monthlyPayment,totalInterest);
+hr.style.transform = `rotate(${hRotation}deg)`;
+min.style.transform = `rotate(${mRotation}deg)`;
+sec.style.transform = `rotate(${sRotation}deg)`;
 
 }
- function displayResult(monthlyPayment,totalInterest)
- {
-    const resulDiv = document.getElementById("result");
 
-    resulDiv.innerHTML = `
-        <p><strong>Monthly Payment : ${monthlyPayment.toFixed(2)}</strong> </p>
-        <p><strong>Total Interest : ${totalInterest.toFixed(2)}</strong> </p>
-       ` ;
-               
 
- }
- function showError(message){
-    const resultDiv = document.getElementById("result");
-    resultDiv.innerHTML = `<p class="error">${message}</p>`;
- }
- document.getElementById('calculateBtn').addEventListener("click",calculateLoan);
+setInterval(displayTime,1000);
